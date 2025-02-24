@@ -1,0 +1,162 @@
+# Docker Revision
+
+## What is Docker?
+
+Docker is a **virtualization software** that simplifies the development and deployment of applications. It packages applications into **containers** that include everything needed to run the application, such as code, runtime, system tools, libraries, and dependencies.
+
+### Benefits of Docker:
+
+- Before Docker, developers had to manually download and configure all the necessary services on their local machines, leading to **inconsistencies** and **configuration issues**.
+- With the introduction of **containers**, services are not installed directly on the machine but are packaged within the container.
+- Containers allow running **different versions of services** without conflicts.
+- Docker makes applications **easily shareable and distributable**.
+
+---
+
+## Virtual Machine vs. Docker
+
+### What's better, and what are the differences?
+
+| Feature        | Virtual Machine                | Docker                        |
+| -------------- | ------------------------------ | ----------------------------- |
+| Resource Usage | Requires a full OS per VM      | Lightweight, shares OS kernel |
+| Performance    | Slower due to full OS overhead | Faster, no OS overhead        |
+| Portability    | Less portable                  | Highly portable               |
+| Startup Time   | Minutes                        | Seconds                       |
+| Isolation      | Fully isolated OS              | Process-level isolation       |
+| Storage        | Requires more storage          | Uses minimal storage          |
+
+Docker is more **efficient, lightweight, and faster** compared to traditional Virtual Machines.
+
+---
+
+## What are Docker Images?
+
+A **Docker Image** is a blueprint of a container. It acts like an **artifact file** that contains everything required to run an application, including dependencies, configurations, and the application code.
+
+- You can create multiple **containers** from a single image.
+- Docker images are **immutable**, meaning they remain unchanged once built.
+
+### What are Docker Containers?
+
+A **Docker Container** is an instance of an image that runs as an **isolated** process on your machine.
+
+- Containers are **lightweight** and **portable**.
+- Multiple containers can run simultaneously using the same image but with **different configurations**.
+
+---
+
+## Docker Commands
+
+### Basic Commands:
+
+```sh
+# List all Docker images
+docker images
+
+# List all running containers
+docker ps
+
+# Pull an image from Docker Hub
+docker pull <image_name>:<version>
+
+# Run a container based on an image
+docker run <image_name>:<tag>
+
+# Run a container in the background (detached mode)
+docker run -d <image_name>:<tag>
+
+# Run a container with port binding
+docker run -d -p <localhost_port>:<container_port> <image_name>:<tag>
+
+# Start a stopped container
+docker start <container_id>
+
+# Run a container with a specific name
+docker run --name web-app <image_name>:<tag>
+```
+
+---
+
+## Docker Registries
+
+A **Docker Registry** is a **storage and distribution system** for Docker images. The largest and most widely used registry is **Docker Hub**.
+
+- **Public Registry:** Anyone can access and pull images.
+- **Private Registry:** Used within organizations for internal use.
+- Popular public registries include **Docker Hub, AWS Elastic Container Registry (ECR), and Google Container Registry (GCR)**.
+
+### Image Versioning
+
+Docker allows versioning of images using **tags**.
+
+```sh
+# Pull a specific version of an image
+docker pull nginx:1.23
+```
+
+- If no tag is specified, Docker pulls the **latest** version.
+
+---
+
+## Port Binding
+
+By default, containers run in isolation. To access containerized services, we **bind** the container’s port to the host machine’s port.
+
+```sh
+# Syntax:
+docker run -d -p <localhost_port>:<container_port> <image_name>:<tag>
+```
+
+Example:
+
+```sh
+docker run -d -p 9000:90 nginx:1.23
+```
+
+- This binds **port 90** of the container to **port 9000** of the host machine.
+- Only one service can run on a specific local host port at a time.
+
+---
+
+## Dockerfile
+
+A **Dockerfile** is a script that contains **commands** to assemble a Docker image. Docker reads these commands to build an image automatically.
+
+### Common Dockerfile Commands:
+
+```dockerfile
+# Specifies the base image
+FROM ubuntu:latest
+
+# Runs a command inside the container
+RUN apt-get update && apt-get install -y nginx
+
+# Copies files from the host to the container
+COPY index.html /var/www/html/
+
+# Sets the working directory inside the container
+WORKDIR /var/www/html
+
+# Command to execute when the container starts
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+- \`\`: Specifies the base image.
+- \`\`: Executes commands inside the container.
+- \`\`: Copies files from the host to the container.
+- \`\`: Sets the working directory inside the container.
+- \`\`: Specifies the default command to run when the container starts.
+
+---
+
+## Summary
+
+- **Docker** provides a lightweight, efficient way to package and deploy applications.
+- **Containers** allow multiple applications to run without conflicts.
+- **Docker Images** are reusable and versioned.
+- **Port Binding** exposes containers to the outside world.
+- **Dockerfiles** automate image building, ensuring consistency.
+
+Docker simplifies **development, deployment, and scalability** of applications. 🚀
+
